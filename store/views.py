@@ -17,7 +17,7 @@ def about(request):
 
 
 # 將產品加入購物車的 function
-@login_required  # 會檢測使用者是否已經登入，若已登入才會執行 add_to_cart() 的程式
+@login_required(login_url='/admin/')  # 會檢測使用者是否已經登入，若已登入才會執行 add_to_cart() 的程式
 def add_to_cart(request, product_id):    # product_id 為 product_list.html 中所回傳的 product.id
     # 從 Product資料表中抓出 id 為 product_id的產品
     product = Product.objects.get(id=product_id)
@@ -37,7 +37,7 @@ def add_to_cart(request, product_id):    # product_id 為 product_list.html 中�
 
 
 # 顯示購物車頁面
-@login_required
+@login_required(login_url='/admin/')
 def view_cart(request):
     cart = Cart.objects.get(user=request.user)
     total_price = sum(item.product.price *
@@ -46,7 +46,7 @@ def view_cart(request):
     return render(request, 'store/view_cart.html', {'cart': cart, 'total_price': total_price})
 
 
-@login_required
+@login_required(login_url='/admin/')
 def checkout(request):
     cart = Cart.objects.get(user=request.user)
     total_price = sum(item.product.price *
