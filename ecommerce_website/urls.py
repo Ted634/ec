@@ -19,7 +19,7 @@ from django.urls import path
 from store.views import product_list, about, add_to_cart, view_cart, checkout, order_success
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    path("admin/", admin.site.urls, name='admin'),
     path('', product_list, name='product_list'),
     path('about/', about, name='about'),
     path('add_to_cart/<int:product_id>', add_to_cart, name='add_to_cart'),

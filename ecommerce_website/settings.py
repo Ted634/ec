@@ -41,10 +41,10 @@ INSTALLED_APPS = [
     "store.apps.StoreConfig",
 ]
 
-# pip install whitenoise
+# pip install whitenoise  # render 建議安裝此套件，如果沒安裝就無法在本機端執行網站
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",  # 網站部署上render 需要加這行程式碼
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -116,7 +116,7 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static/')]
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # for deployment
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # for deployment 用於部署網站
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
