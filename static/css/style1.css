@@ -43,7 +43,7 @@
 }
 #logo{
     float: left;
-    background-image: url(../static/img/logo-1.png);
+    /* background-image: url(../static/img/shoppinglogo.jpg); */
     background-repeat: no-repeat;
     background-size: contain;
 }

@@ -46,22 +46,29 @@ def view_cart(request):
     return render(request, 'store/view_cart.html', {'cart': cart, 'total_price': total_price})
 
 
+# 購物車確認付款頁面
 @login_required(login_url='/admin/')
 def checkout(request):
     cart = Cart.objects.get(user=request.user)
     total_price = sum(item.product.price *
                       item.quantity for item in cart.cartitem_set.all())
-    if request.method == 'POST':
-        # 模擬...
+    if request.method == 'POST':  # 如果使用者在 checkout頁面點擊 Confirm Order並送出請求
+        # 模擬貨到付款的邏輯，假設訂單已成功支付
         order = Order.objects.create(
-            user=request.user, total_price=total_price)
+            user=request.user, total_price=total_price)  # 從 Cart資料表中抓取資料，並在 Order資料表中新增資料
+        # 透過 for迴圈去 cartitem資料表中抓取資料
         for item in cart.cartitem_set.all():
             OrderItem.objects.create(
                 order=order, product=item.product, quantity=item.quantity)
+
         cart.cartitem_set.all().delete()
-        return redirect('order_success')  # 將用戶...
+        # 將 Cart購物車資料表中的資料寫進 Order訂單資料表中後，刪除Cart購物車資料表中的資料
+
+        return redirect('order_success')  # 將使用者重新定向到訂單成功頁面
+    # 如果使用者還沒在 checkout頁面點擊 Confirm Order並送出請求時，顯示 Cart資料表中的資料
     return render(request, 'store/checkout.html', {'cart': cart, 'total_price': total_price})
 
 
+# 訂單成功完成頁面
 def order_success(request):
     return render(request, 'store/order_success.html')
